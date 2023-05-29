@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Q5FoodHarvest {
+
     private int numToSkip;
     private int numOfVertices;
     private int[] path;
@@ -45,7 +46,7 @@ public class Q5FoodHarvest {
         }
 
         for (int vertexIndex = 0; vertexIndex < graph.source.size(); ++vertexIndex) {
-           // int vertex = graph.source.get(vertexIndex);
+            // int vertex = graph.source.get(vertexIndex);
             if (isSafe(vertexIndex, position)) {
                 path[position] = vertexIndex;
                 if (solve(position + 1)) {
@@ -73,11 +74,19 @@ public class Q5FoodHarvest {
 
     private void printHamiltonianCycle() {
         for (int i = 0; i < numOfVertices; ++i) {
-            if((path[i] + 1) >= graph.getNumToSkip())
-                System.out.print(path[i] + 2 + " ");
-            else
-            System.out.print(path[i] + 1 + " ");
+            if ((path[i] + 1) >= graph.getNumToSkip()) {
+                System.out.print(path[i] + 2);
+                if (i <= numOfVertices - 1) {
+                    System.out.print("->");
+                }
+            } else {
+                System.out.print(path[i] + 1);
+                if (i <= numOfVertices - 1) {
+                    System.out.print("->");
+                }
+            }
         }
+
         System.out.println(1);
     }
 
@@ -87,7 +96,7 @@ public class Q5FoodHarvest {
         Scanner in = new Scanner(System.in);
         numToSkip = in.nextInt();
         int numGraph = 10;
-        
+
         Graph graph = new Graph(numGraph, numToSkip);
         graph.addEdge(1, 2);
         graph.addEdge(1, 3);
@@ -122,13 +131,14 @@ public class Q5FoodHarvest {
 
 //        System.out.println("source size: " + graph.source.size());
 //        System.out.println("list size: " + graph.adjacencyList.size());
-        graph.printAdjacencyList();
+//        graph.printAdjacencyList();
         Q5FoodHarvest hc = new Q5FoodHarvest();
         hc.findHamiltonianCycle(graph);
     }
 }
 
 class Graph {
+
     private int numToSkip;
     private int numOfVertices;
     protected List<List<Integer>> adjacencyList;
@@ -175,14 +185,13 @@ class Graph {
         for (int i = 0; i < adjacencyList.size(); i++) {
             System.out.print(source.get(i) + " -> ");
             for (int neighbor : adjacencyList.get(i)) {
-                if((neighbor+1)>=numToSkip)
+                if ((neighbor + 1) >= numToSkip) {
                     System.out.print((neighbor + 2) + " ");
-                else
-                System.out.print((neighbor + 1) + " ");
+                } else {
+                    System.out.print((neighbor + 1) + " ");
+                }
             }
             System.out.println();
         }
     }
 }
-
-
