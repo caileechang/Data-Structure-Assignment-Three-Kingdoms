@@ -83,19 +83,18 @@ public class EnemyFortress {
             displayPath(shortestTime);
             System.out.printf("Total time: %.3f hour\n", time);
             System.out.println("--------------------------------------");
-
         }
     }
 
    private static int calculatePathDistance(path graph, List<Integer> path) {
-    int distance = 0;
-    for (int i = 0; i < path.size() - 1; i++) {
-        int currentNode = path.get(i);
-        int nextNode = path.get(i + 1);
-        distance += graph.getDistance(currentNode, nextNode);
+        int distance = 0;
+        for (int i = 0; i < path.size() - 1; i++) {
+            int currentNode = path.get(i);
+            int nextNode = path.get(i + 1);
+            distance += graph.getDistance(currentNode, nextNode);
+        }
+        return distance;
     }
-    return distance;
-}
    private static double calculatePathTime(path graph, List<Integer> path, String general)  {
     double time = 0;
     for (int i = 0; i < path.size() - 1; i++) {
@@ -106,20 +105,18 @@ public class EnemyFortress {
     }
     return time;
 }
-
-
-
+    
     private static void displayPath(List<Integer> path) {
-    int size = path.size();
-    for (int i = 0; i < size; i++) {
-        System.out.print(path.get(i));
-        if (i < size - 1) {
-            System.out.print("->");
+        int size = path.size();
+        for (int i = 0; i < size; i++) {
+            System.out.print(path.get(i));
+            if (i < size - 1) {
+                System.out.print("->");
+            }
+        }
+        System.out.println();
         }
     }
-    System.out.println();
-}
-}
 
 class path {
     private int V; // Number of vertices
@@ -140,12 +137,10 @@ class path {
     weights[u][v] = distance;
 }
 
-
    public void addEdge(int u, int v, int distance) {
     addDirectedEdge(u, v, distance);
     addDirectedEdge(v, u, distance);
 }
-
 
     public int getDistance(int u, int v) {
         return weights[u][v];
@@ -161,7 +156,6 @@ class path {
         else{
             return 1 * geo(u,v,g);
         }
-        
     }
     
     public double geo(int u, int v, String g){
@@ -190,33 +184,33 @@ class path {
         
         for (int i = 1; i <= 10; i++) 
             forest[i] = new ArrayList<>();
-                forest[1].add(2);
-                forest[2].add(1);
-                forest[5].add(7);
-                forest[7].add(5);
-                forest[6].add(7);
-                forest[7].add(6);
-                forest[8].add(10);
-                forest[10].add(8);
+            forest[1].add(2);
+            forest[2].add(1);
+            forest[5].add(7);
+            forest[7].add(5);
+            forest[6].add(7);
+            forest[7].add(6);
+            forest[8].add(10);
+            forest[10].add(8);
         
 
         for (int i = 1; i <= 10; i++) 
             swamp[i] = new ArrayList<>();
-                swamp[2].add(4);
-                swamp[4].add(2);
-                swamp[3].add(4);
-                swamp[4].add(3);
-                swamp[4].add(5);
-                swamp[5].add(4);
-                swamp[8].add(9);
-                swamp[9].add(8);
+            swamp[2].add(4);
+            swamp[4].add(2);
+            swamp[3].add(4);
+            swamp[4].add(3);
+            swamp[4].add(5);
+            swamp[5].add(4);
+            swamp[8].add(9);
+            swamp[9].add(8);
         
 
         for (int i = 1; i <= 10; i++) 
             plankRoad[i] = new ArrayList<>();
-                plankRoad[3].add(7);
-                plankRoad[6].add(8);
-                plankRoad[8].add(6);
+            plankRoad[3].add(7);
+            plankRoad[6].add(8);
+            plankRoad[8].add(6);
         
         
         if(flatRoad[u].contains(v)){
