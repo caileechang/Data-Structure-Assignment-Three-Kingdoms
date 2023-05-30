@@ -1,65 +1,64 @@
 
+
 package assignmentdsq7;
 
-import java.util.Scanner;
 
 public class AssignmentDSQ7 {
 
+   
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-
-        System.out.print("Enter the number of rows: ");
-        int rows = sc.nextInt();
-        System.out.print("Enter the number of columns: ");
-        int cols = sc.nextInt();
-
-        int[][] matrix = new int[rows][cols];
-        System.out.println("Enter the matrix elements (0s and 1s):");
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                matrix[i][j] = sc.nextInt();
-            }
-        }
-
-        int clusterCount = findBattleShipClusters(matrix);
-        System.out.println("Number of clusters: " + clusterCount);
-
-        sc.close();
+        int[][] matrix = {
+            {1, 1, 0, 0, 1, 0, 0, 1, 1, 1},
+            {1, 0, 0, 0, 1, 0, 0, 0, 1, 0},
+            {1, 0, 1, 1, 1, 0, 1, 0, 1, 0},
+            {1, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+            {1, 0, 1, 1, 1, 1, 1, 1, 1, 1},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {1, 1, 1, 1, 0, 1, 1, 0, 1, 0},
+            {1, 0, 0, 0, 0, 0, 0, 0, 1, 0},
+            {1, 0, 0, 0, 1, 0, 1, 1, 1, 1},
+            {1, 0, 0, 0, 1, 0, 0, 0, 0, 0}
+        };
+        
+        int clusterCount = findBattleshipClusters(matrix);
+        System.out.println("Number of battleship clusters: " + clusterCount);
     }
-
-    private static int findBattleShipClusters(int[][] matrix) {
+    
+    public static int findBattleshipClusters(int[][] matrix) {
+        int clusterCount = 0;
         int rows = matrix.length;
         int cols = matrix[0].length;
-
         boolean[][] visited = new boolean[rows][cols];
-        int clusterCount = 0;
-
+        
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 if (matrix[i][j] == 1 && !visited[i][j]) {
-                    exploreCluster(matrix, visited, i, j);
+                    dfs(matrix, i, j, visited);
                     clusterCount++;
                 }
             }
         }
-
+        
         return clusterCount;
     }
-
-    private static void exploreCluster(int[][] matrix, boolean[][] visited, int row, int col) {
+    
+    public static void dfs(int[][] matrix, int row, int col, boolean[][] visited) {
         int rows = matrix.length;
         int cols = matrix[0].length;
-
-        if (row < 0 || col < 0 || row >= rows || col >= cols || visited[row][col] || matrix[row][col] == 0) {
+        
+        if (row < 0 || row >= rows || col < 0 || col >= cols || matrix[row][col] == 0 || visited[row][col])
             return;
-        }
-
+        
         visited[row][col] = true;
-
-        exploreCluster(matrix, visited, row - 1, col); // Up
-        exploreCluster(matrix, visited, row + 1, col); // Down
-        exploreCluster(matrix, visited, row, col - 1); // Left
-        exploreCluster(matrix, visited, row, col + 1); // Right
+        
+        // Perform DFS in all eight adjacent cells
+        dfs(matrix, row - 1, col, visited); // Up
+        dfs(matrix, row + 1, col, visited); // Down
+        dfs(matrix, row, col - 1, visited); // Left
+        dfs(matrix, row, col + 1, visited); // Right
+        dfs(matrix, row - 1, col - 1, visited); // Diagonal: Up-left
+        dfs(matrix, row - 1, col + 1, visited); // Diagonal: Up-right
+        dfs(matrix, row + 1, col - 1, visited); // Diagonal: Down-left
+        dfs(matrix, row + 1, col + 1, visited); // Diagonal: Down-right
     }
 }
