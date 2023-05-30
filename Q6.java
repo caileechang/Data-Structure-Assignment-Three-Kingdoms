@@ -6,7 +6,7 @@ package Assignment;
 
 import java.util.Scanner;
 
-public class Text {
+public class Q6{
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         String text = "^hkcpzl$^jhv$^jhv$av$bzl$^aol$^johpu$^zayhalnlt,$(ojpod)$pz$av$johpu$opz$(zwpozlsaahi)$dpao$zayvun$pyvu$johpuz.";
