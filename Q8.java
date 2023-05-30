@@ -6,7 +6,6 @@ import java.util.*;
 public class AssignmentDSQ8 {
 
 
-
     static class Cell {
         int row;
         int col;
@@ -20,21 +19,22 @@ public class AssignmentDSQ8 {
     }
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        int[][] maze = {
+            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+            {2, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1},
+            {1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1},
+            {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1},
+            {1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1},
+            {1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1},
+            {1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1},
+            {1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1},
+            {1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1},
+            {1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 3},
+            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+        };
 
-        System.out.println("Enter the number of rows in the maze:");
-        int rows = scanner.nextInt();
-        System.out.println("Enter the number of columns in the maze:");
-        int cols = scanner.nextInt();
-
-        int[][] maze = new int[rows][cols];
-
-        System.out.println("Enter the maze (0 for empty space, 1 for obstacle, 2 for start, 3 for exit):");
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                maze[i][j] = scanner.nextInt();
-            }
-        }
+        int rows = maze.length;
+        int cols = maze[0].length;
 
         Queue<Cell> queue = new LinkedList<>();
         boolean[][] visited = new boolean[rows][cols];
