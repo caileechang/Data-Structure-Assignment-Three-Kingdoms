@@ -54,6 +54,7 @@ public class EnemyFortress {
                 }
             }
 
+            //Find shortest time
             double time = Integer.MAX_VALUE;
             List<Integer> shortestTime = null;
             for (List<Integer> path : allPaths) {
@@ -64,7 +65,7 @@ public class EnemyFortress {
                 }
             }
 
-            // Display shortest path and distance
+            // Display shortest path, distance and time
             System.out.println("--------------------------------------");
             System.out.println("General: " + general);
             System.out.println("Shortest path:");
@@ -156,6 +157,8 @@ class path {
         forest = new ArrayList[11];
         swamp = new ArrayList[11];
         plankRoad = new ArrayList[11];
+        
+        //Add the edges to each geographical factor
         for (int i = 1; i <= 10; i++) {
             flatRoad[i] = new ArrayList<>();
         }
