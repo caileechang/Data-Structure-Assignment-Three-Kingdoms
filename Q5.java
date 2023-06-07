@@ -131,7 +131,7 @@ public class Q5 {
     public static void main(String[] args) {
 
         int numToSkip = 0;
-        System.out.print("Enter node without food [1-10]: ");
+        System.out.print("Enter node without food [2-10]: ");
         Scanner in = new Scanner(System.in);
         numToSkip = in.nextInt();
         int numGraph = 10;
