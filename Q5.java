@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class Q5FoodHarvest {
+public class Q5 {
 
     private int numOfVertices;
     private int[] path;
@@ -26,7 +26,7 @@ public class Q5FoodHarvest {
             printHamiltonianCycle();
         } else {
             // Create a new instance of FoodHarvest and a new graph to include the removed node 
-            Q5FoodHarvest newGraph = new Q5FoodHarvest();
+            Q5 newGraph = new Q5();
             Graph graph2 = newGraph.createGraph(10, 11);
             newGraph.findHamiltonianCycle(graph2);
         }
@@ -136,7 +136,7 @@ public class Q5FoodHarvest {
         numToSkip = in.nextInt();
         int numGraph = 10;
 
-        Q5FoodHarvest hc = new Q5FoodHarvest();
+        Q5 hc = new Q5();
         Graph graph = hc.createGraph(numGraph, numToSkip);
         hc.findHamiltonianCycle(graph);
     }
@@ -178,10 +178,6 @@ class Graph {
 
     public int getNumOfVertices() {
         return numOfVertices;
-    }
-
-    public int getRemovedNode() {
-        return numToSkip;
     }
 
     // Check if there is an edge between the source and destination vertices
