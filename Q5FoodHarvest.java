@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package ds.assignment;
 
 /**
@@ -15,7 +11,6 @@ import java.util.Scanner;
 
 public class Q5FoodHarvest {
 
-    private int numToSkip;
     private int numOfVertices;
     private int[] path;
     private Graph graph;
@@ -23,21 +18,23 @@ public class Q5FoodHarvest {
     public void findHamiltonianCycle(Graph graph) {
         this.graph = graph;
         numOfVertices = graph.source.size();
-        numToSkip = graph.getNumToSkip();
         path = new int[graph.source.size()];
         Arrays.fill(path, -1);
 
         path[0] = 0;
         if (solve(1)) {
-            System.out.println("Path exists:");
             printHamiltonianCycle();
         } else {
-            System.out.println("Path does not exist.");
+            // Create a new instance of FoodHarvest and a new graph to include the removed node 
+            Q5FoodHarvest newGraph = new Q5FoodHarvest();
+            Graph graph2 = newGraph.createGraph(10, 11);
+            newGraph.findHamiltonianCycle(graph2);
         }
     }
 
     private boolean solve(int position) {
         if (position == graph.source.size()) {
+            // Check if there is an edge from the last vertex to the starting vertex
             if (graph.hasEdge(path[position - 1], path[0])) {
                 return true;
             } else {
@@ -46,7 +43,6 @@ public class Q5FoodHarvest {
         }
 
         for (int vertexIndex = 0; vertexIndex < graph.source.size(); ++vertexIndex) {
-            // int vertex = graph.source.get(vertexIndex);
             if (isSafe(vertexIndex, position)) {
                 path[position] = vertexIndex;
                 if (solve(position + 1)) {
@@ -59,10 +55,12 @@ public class Q5FoodHarvest {
     }
 
     private boolean isSafe(int index, int position) {
+        // Check if there is an edge between the current vertex and the previous vertex
         if (!graph.hasEdge(path[position - 1], index)) {
             return false;
         }
 
+        // Check if the current vertex is already visited
         for (int i = 0; i < position; ++i) {
             if (path[i] == index) {
                 return false;
@@ -73,16 +71,17 @@ public class Q5FoodHarvest {
     }
 
     private void printHamiltonianCycle() {
+        System.out.println("Path:");
         for (int i = 0; i < numOfVertices; ++i) {
             if ((path[i] + 1) >= graph.getNumToSkip()) {
                 System.out.print(path[i] + 2);
                 if (i <= numOfVertices - 1) {
-                    System.out.print("->");
+                    System.out.print(" -> ");
                 }
             } else {
                 System.out.print(path[i] + 1);
                 if (i <= numOfVertices - 1) {
-                    System.out.print("->");
+                    System.out.print(" -> ");
                 }
             }
         }
@@ -90,14 +89,9 @@ public class Q5FoodHarvest {
         System.out.println(1);
     }
 
-    public static void main(String[] args) {
-        int numToSkip = 9;
-        System.out.print("Enter node without food: ");
-        Scanner in = new Scanner(System.in);
-        numToSkip = in.nextInt();
-        int numGraph = 10;
-
+    private Graph createGraph(int numGraph, int numToSkip) {
         Graph graph = new Graph(numGraph, numToSkip);
+        // Add edges to the graph
         graph.addEdge(1, 2);
         graph.addEdge(1, 3);
         graph.addEdge(1, 6);
@@ -117,8 +111,10 @@ public class Q5FoodHarvest {
         graph.addDirectedEdge(3, 7); // Directed edge
 
         if (numToSkip <= numGraph) {
+            // Remove the specified node from the adjacency list and source list
             graph.adjacencyList.remove(numToSkip - 1);
             graph.source.remove(numToSkip - 1);
+            // Update the indices of the remaining nodes in the adjacency list
             for (List<Integer> neighbors : graph.adjacencyList) {
                 for (int i = 0; i < neighbors.size(); i++) {
                     int neighbor = neighbors.get(i);
@@ -129,10 +125,19 @@ public class Q5FoodHarvest {
             }
         }
 
-//        System.out.println("source size: " + graph.source.size());
-//        System.out.println("list size: " + graph.adjacencyList.size());
-//        graph.printAdjacencyList();
+        return graph;
+    }
+
+    public static void main(String[] args) {
+
+        int numToSkip = 0;
+        System.out.print("Enter node without food [1-10]: ");
+        Scanner in = new Scanner(System.in);
+        numToSkip = in.nextInt();
+        int numGraph = 10;
+
         Q5FoodHarvest hc = new Q5FoodHarvest();
+        Graph graph = hc.createGraph(numGraph, numToSkip);
         hc.findHamiltonianCycle(graph);
     }
 }
@@ -158,6 +163,7 @@ class Graph {
         }
     }
 
+    // Add undirected edge to the adjacency list
     public void addEdge(int source, int destination) {
         if (source != numToSkip && destination != numToSkip) {
             adjacencyList.get(source - 1).add(destination - 1);
@@ -165,6 +171,7 @@ class Graph {
         }
     }
 
+    // Add directed edge to the adjacency list
     public void addDirectedEdge(int source, int destination) {
         adjacencyList.get(source - 1).add(destination - 1);
     }
@@ -173,6 +180,11 @@ class Graph {
         return numOfVertices;
     }
 
+    public int getRemovedNode() {
+        return numToSkip;
+    }
+
+    // Check if there is an edge between the source and destination vertices
     public boolean hasEdge(int source, int destination) {
         return adjacencyList.get(source).contains(destination);
     }
@@ -181,6 +193,7 @@ class Graph {
         return numToSkip;
     }
 
+    // Print the adjacency list representation of the graph
     public void printAdjacencyList() {
         for (int i = 0; i < adjacencyList.size(); i++) {
             System.out.print(source.get(i) + " -> ");
